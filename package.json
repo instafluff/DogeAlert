@@ -1,0 +1,33 @@
+{
+  "name": "dogealert",
+  "version": "1.0.0",
+  "description": "Such stream alert. Very Twitch overlay.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/instafluff/DogeAlert.git"
+  },
+  "keywords": [
+    "Stream",
+    "Livestream",
+    "live",
+    "Twitch",
+    "alert",
+    "doge",
+    "dogecoin",
+    "meme",
+    "Instafluff"
+  ],
+  "author": "Instafluff",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/instafluff/DogeAlert/issues"
+  },
+  "homepage": "https://github.com/instafluff/DogeAlert#readme",
+  "dependencies": {
+    "webwebweb": "^1.4.6"
+  }
+}

@@ -1,0 +1,122 @@
+<html>
+	<head>
+		<title>DogeAlert</title>
+		<!-- Global site tag (gtag.js) - Google Analytics -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-135113520-1"></script>
+		<script>
+		window.dataLayer = window.dataLayer || [];
+
+		function gtag() {
+		  dataLayer.push(arguments);
+		}
+		gtag('js', new Date());
+		gtag('config', 'UA-135113520-1');
+		</script>
+		<script src="https://cdn.jsdelivr.net/npm/pinkfluffyunicorn@1.0.1/dist/pinkfluffyunicorn.min.js" integrity="sha256-fSxCnodHw0bNyjNrl6LfpxJbmS2mM456UEYfzOR5KR0=" crossorigin="anonymous"></script>
+		<script src="https://cdn.jsdelivr.net/npm/dogecoinjs@latest/public/dogecoin.min.js"></script>
+	</head>
+	<body>
+		<div id="unicorn-display"></div>
+		<script>
+		const params = new URLSearchParams( location.search );
+		const coinTimeout = parseInt( params.get( "timeout" ) || 2000 );
+		let counter = 0;
+		let dogePopups = [];
+
+		function getRandomInt( number ) {
+			return Math.floor( number * Math.random() );
+		}
+
+		function Init() {
+			Unicorn.Load( "bork", "public/bork.mp3" );
+			Unicorn.Load({
+				"coin": "public/coin.mp3",
+				"dogecoin": "public/dogecoin.png",
+				"doge": "public/doge.png",
+			});
+
+			Dogecoin.listen( params.get( "wallet" ), ( wallet, amount, extra ) => {
+				if( amount > 0 ) {
+					console.log( "Gots Doge!" );
+					dogeAlert();
+				}
+			} );
+		}
+
+		function dogeAlert() {
+			Unicorn.PlaySound( "bork", {
+				volume: 0.5
+			} );
+			for( let i = 0; i < 100; i++ ) {
+				dropCoin( getRandomInt( 1280 ) );
+			}
+			popupDoge( 300 + getRandomInt( 1280 - 300 * 2 ) );
+			Unicorn.PlaySound( "coin", {
+				volume: 1.5
+			} );
+		}
+
+		function popupDoge( x ) {
+			counter++;
+			let name = "doge" + counter;
+			let popup = Unicorn.AddOverlay( name, "doge", x, 720 );
+			popup.timer = 4000;
+			popup.name = name;
+			dogePopups.push( popup );
+		}
+
+		function dropCoin( x ) {
+			counter++;
+			let name = "dogecoin" + counter;
+			Unicorn.AddObject( name, {
+				type: "circle",
+				x: x, y: -100 - getRandomInt( 500 ),
+				radius: 32,
+				sprite: "dogecoin",
+				friction: 0.02
+			} );
+			setTimeout( () => {
+				Unicorn.RemoveObject( name );
+			}, coinTimeout + getRandomInt( 2000 ) );
+		}
+
+		function Update( timestamp, timeDiffInMs ) {
+			// Add Update Loop
+			// console.log( timestamp, timeDiffInMs );
+			dogePopups.forEach( doge => {
+				doge.timer -= timeDiffInMs;
+				if( doge.timer <= 0 ) {
+					Unicorn.RemoveOverlay( doge.name );
+				}
+				doge.position.y = 720 - 300 * Math.sin( ( 4000 - doge.timer ) / 1000 );
+			});
+		}
+
+		function OnChatCommand( user, command, message, flags, extra ) {
+			if( ( flags.broadcaster || flags.mod ) && command === "dogealert" ) {
+				dogeAlert();
+			}
+		}
+
+		function OnChatMessage( user, message, flags, self, extra ) {
+		}
+
+		Unicorn.Create( "unicorn-display", {
+			width: 1280,
+			height: 720,
+			// background: "#000000",// "transparent",
+			background: "transparent",
+			init: Init,
+			update: Update,
+			channel: params.get( "channel" ),
+			onCommand: OnChatCommand,
+			onChat: OnChatMessage,
+			wallBottom: true,
+			wallLeft: true,
+			wallRight: true,
+			// screenWalls: false // Default: true
+			gravity: { x: 0, y: 2.5 } // Default: { x: 0, y: 1 }
+		});
+		</script>
+	</body>
+</html>
