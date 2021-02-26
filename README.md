@@ -14,6 +14,10 @@ We built this Stream Overlay to indicate new Dogecoin wallet transactions live o
 
 > https://twitch.tv/instafluff
 
+> *Such coin. Much thanks!*
+
+> DPsvmxqaJV15nqVnT9BiwYskVmQLozRKht
+
 ## Instructions ##
 
 Add this as a Browser Source and replace `yourchannel` with your Twitch username and `yourwallet` with your Dogecoin wallet address!
