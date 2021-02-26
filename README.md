@@ -25,6 +25,10 @@ For example:
 https://www.instafluff.tv/DogeAlert?channel=instafluff&wallet=DPsvmxqaJV15nqVnT9BiwYskVmQLozRKht
 ```
 
+## How to test!
+
+The broadcaster and moderators can type `!dogealert` in the Twitch channel chat to trigger the alert animation.
+
 ## Optional Parameters ##
 
 - Coins Display Time `timeout=2000`
